@@ -1,0 +1,249 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>HackerEarth | HoneyWell tech Challenge</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="fonts/font-awesome/font-awesome.css">
+    <link rel="stylesheet" href="fonts/fonts.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+
+    <style>
+    #employeeList{
+      margin: 10px;
+      text-align: left;
+      background-color: #ffffff;
+      color: #cc0000;
+    }
+
+    ul{
+      cursor: pointer;
+      padding: 10px; 
+    }
+
+    li{
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .alert {
+        padding: 5px;
+        background-color: #FFF;
+        color: #cc0000;
+        width: 300px;
+        vertical-align: middle;
+        position: relative;
+        z-index: 15;
+        left: 50%;
+        margin: -200px 0 0 -150px;
+        text-align: center;
+        min-height: 20px;
+        overflow: hidden;
+        font-weight: bold;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: #000;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .closebtn:hover {
+        color: black;
+    }
+
+
+    a{
+      font-size: 12px;
+    }
+    </style>
+  </head>
+  <body>
+    <!--[if lt IE 8]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <header class="lavel-up-header lavel-up-header-bg-img" data-stellar-background-ratio="0.5">
+      <div class="lavel-up-color-overlay">
+        <div class="container text-center">
+
+          <!-- Newsletter signup start -->
+          <div class="lu-newletter">
+            <h2>Search the person name to look for his location.<a href="http://agileseat.890m.com/honeywell/parallax/recent.html" target="_blank">Recent</a></h2>
+              <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                  <div id="mc_embed_signup" class="lu_singup_form">
+                    <form  id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" onsubmit="return false;">
+                      <div id="mc_embed_signup_scroll">
+                        <div class="mc-field-group input-group input-group-lg">
+                          <input type="text" value="" name="employee" class="required form-control" id="employee" placeholder="Name" required>
+                          <span class="input-group-btn">
+                            <input type="button" value="search" name="search" id="search" class="btn btn-default">
+                          </span>
+                        </div>
+                        <div id="employeeList">
+                        </div>
+                      </div>
+                    </form>
+                    <center><img src="img/indicator.gif" style="display: none" id="LoadingImage"></center>
+                  </div>
+                  <!--End mc_embed_signup-->
+                </div>
+              </div>
+          </div>
+          <!-- Newsletter signup end -->
+
+
+        </div><!--.col-md-12-->
+
+      </div><!--.row-->
+
+          <div class="alert" style="display:none;">
+              <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+              <p id="id">12121</p>
+              <p id="name">Rehan Shikkalgar</p>
+              <p id="position">B BLock</p>
+              <p id="lastupdated">12/10/1997</p>
+              <p id="notfound"></p>
+          </div>
+
+
+
+    </header> 
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/smoothscroll.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/retina.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    
+    <!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="assets/js/template.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+
+		$('#employee').keyup(function(){
+      $(".alert").hide();
+			var query = $(this).val();
+			if (query != '') {
+				//alert(query);
+				$.ajax({
+					url:"displayUser.php",
+					method:"POST",
+					data:{query:query},
+					success:function(data)
+					{
+						$('#employeeList').fadeIn();
+						$('#employeeList').html(data);
+					}
+				});
+			}
+		});
+
+		$(document).on('click','li',function(){
+			$('#employee').val($(this).text());
+			$('#employeeList').fadeOut();
+		});
+
+
+    $('#search').click(function(){
+    			var employeeName = $('#employee').val();
+      if(employeeName != ''){
+          $("#LoadingImage").show();
+    			$.ajax({
+    				url:"particularUser.php",
+    				method:"POST",
+    				data:{query:employeeName},
+    				success : function(data)
+    				{
+              $("#LoadingImage").hide();
+              $(".alert").show();
+    					//alert(data.trim());
+              if (data.trim() == "\"Not\"") {
+                $("p#name").hide();
+                $("p#id").hide();
+                $("p#position").hide();
+                $("p#lastupdated").hide();
+                $("p#notfound").show();
+                $("p#notfound").text("Employee Not found");
+              }
+              else{
+                json = JSON.parse(data);
+                if(json.empposition == "Sorry,Not in the network."){
+                    $("p#name").show();
+                    $("p#id").show();
+                    $("p#position").hide();
+                    $("p#lastupdated").show();
+                    $("p#notfound").show();
+                    $("p#name").text("Employee Name - "+json.name);
+                    $("p#id").text("Employee ID - "+json.empid);
+                    $("p#lastupdated").text("Last Updated - "+json.lastupdated);
+                    $("p#notfound").text("Sorry,Not in the network.");
+                }
+                else{
+                    $("p#name").show();
+                    $("p#id").show();
+                    $("p#position").show();
+                    $("p#lastupdated").show();
+                    $("p#name").text("Employee Name - "+json.name);
+                    $("p#id").text("Employee ID - "+json.empid);
+                    $("p#position").text("Employee position - "+json.empposition);
+                    $("p#lastupdated").text("Last Updated - "+json.lastupdated);
+                    $("p#notfound").hide();
+
+
+                    if (typeof(Storage) !== "undefined") {
+                        localStorage.setItem(json.empid, json.name+","+json.empposition+","+json.lastupdated);
+                    } 
+                    var x = "";
+                    for(var i=0, len=localStorage.length; i<len; i++) {
+                        var key = localStorage.key(i);
+                        k = parseInt(key);
+                        var value = localStorage[key];
+                        if(Number.isInteger(k)){
+                          x = x + key + " => " + value;
+                        }
+                    }
+                    //alert(x);
+
+                }//else
+              }
+    				}, 
+            error: function (xhr, status) {  
+              $("#LoadingImage").hide();
+              alert('Unknown error ' + status); 
+            } 
+    			});
+      }
+      else{
+        alert("please enter the name");
+        //alert(document.cookie);
+      }
+  });
+	});
+</script>
+<script>
+
+</script>
+
+  </body>
+</html>
